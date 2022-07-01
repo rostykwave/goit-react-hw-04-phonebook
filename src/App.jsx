@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { ContactList } from './components/ContactList';
 import { Container } from './components/Container';
 import { Filter } from './components/Filter';
+import { SignUpForm } from 'components/HookForm';
 
 const CONTACTS_lS_KEY = 'savedContacts';
 
@@ -18,19 +19,19 @@ export class App extends Component {
     filter: '',
   };
 
-  componentDidMount(){
+  componentDidMount() {
     const contacts = JSON.parse(localStorage.getItem(CONTACTS_lS_KEY));
 
     if (contacts) {
-      this.setState({contacts})
+      this.setState({ contacts });
     }
   }
 
-  componentDidUpdate(prevProps, prevState){
-    const {contacts}=this.state;
-    
-    if (prevState.contacts!==contacts) {
-     localStorage.setItem(CONTACTS_lS_KEY, JSON.stringify(contacts))
+  componentDidUpdate(prevProps, prevState) {
+    const { contacts } = this.state;
+
+    if (prevState.contacts !== contacts) {
+      localStorage.setItem(CONTACTS_lS_KEY, JSON.stringify(contacts));
     }
   }
 
@@ -76,6 +77,7 @@ export class App extends Component {
 
     return (
       <Container>
+        <SignUpForm />
         <h1>PhoneBook</h1>
         <ContactForm onSubmit={this.addContactHandler} />
 
@@ -89,4 +91,3 @@ export class App extends Component {
     );
   }
 }
-
