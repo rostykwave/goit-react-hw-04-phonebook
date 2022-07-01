@@ -1,4 +1,4 @@
-import { Component, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ContactForm } from './components/ContactForm';
 import { nanoid } from 'nanoid';
 import { ContactList } from './components/ContactList';
@@ -46,6 +46,25 @@ export const App = () => {
   };
 
   const visibleContacts = getVisibleContacts();
+
+  const CONTACTS_lS_KEY = 'savedContacts';
+
+  useEffect(() => {
+    console.log('use APP');
+    window.localStorage.setItem(CONTACTS_lS_KEY, JSON.stringify(contacts));
+  }, [contacts]);
+
+  // useEffect(() => {
+  //   console.log('APP start');
+  //   window.localStorage.getItem(CONTACTS_lS_KEY);
+  //   const SavedContacts = JSON.parse(
+  //     window.localStorage.getItem(CONTACTS_lS_KEY)
+  //   );
+  //   console.log(SavedContacts);
+  //   // if (contacts) {
+  //   //       this.setState({ contacts });
+  //   //     }
+  // }, []);
 
   return (
     <Container>

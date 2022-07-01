@@ -21,10 +21,10 @@ export function SignUpForm() {
   };
 
   useEffect(() => {
-    console.log('Use');
+    // console.log('Use');
   }, []);
   useEffect(() => {
-    console.log('Use name');
+    // console.log('Use name');
   }, [name]);
 
   return (
