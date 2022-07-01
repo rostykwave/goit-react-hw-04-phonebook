@@ -7,12 +7,17 @@ import { Filter } from './components/Filter';
 import { SignUpForm } from 'components/HookForm';
 
 export const App = () => {
-  const [contacts, setContacts] = useState([
-    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  ]);
+  const CONTACTS_lS_KEY = 'savedContacts';
+
+  const [contacts, setContacts] = useState(
+    JSON.parse(window.localStorage.getItem(CONTACTS_lS_KEY ?? ''))
+  );
+  // const [contacts, setContacts] = useState([
+  //   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+  //   { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+  //   { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+  //   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+  // ]);
   const [filter, setFilter] = useState('');
 
   const addContactHandler = data => {
@@ -47,8 +52,6 @@ export const App = () => {
 
   const visibleContacts = getVisibleContacts();
 
-  const CONTACTS_lS_KEY = 'savedContacts';
-
   useEffect(() => {
     console.log('use APP');
     window.localStorage.setItem(CONTACTS_lS_KEY, JSON.stringify(contacts));
@@ -56,7 +59,7 @@ export const App = () => {
 
   // useEffect(() => {
   //   console.log('APP start');
-  //   window.localStorage.getItem(CONTACTS_lS_KEY);
+
   //   const SavedContacts = JSON.parse(
   //     window.localStorage.getItem(CONTACTS_lS_KEY)
   //   );
