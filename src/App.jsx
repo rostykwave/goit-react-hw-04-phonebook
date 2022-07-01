@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, useState } from 'react';
 import { ContactForm } from './components/ContactForm';
 import { nanoid } from 'nanoid';
 import { ContactList } from './components/ContactList';
@@ -6,37 +6,16 @@ import { Container } from './components/Container';
 import { Filter } from './components/Filter';
 import { SignUpForm } from 'components/HookForm';
 
-const CONTACTS_lS_KEY = 'savedContacts';
+export const App = () => {
+  const [contacts, setContacts] = useState([
+    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+  ]);
+  const [filter, setFilter] = useState('');
 
-export class App extends Component {
-  state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
-    filter: '',
-  };
-
-  componentDidMount() {
-    const contacts = JSON.parse(localStorage.getItem(CONTACTS_lS_KEY));
-
-    if (contacts) {
-      this.setState({ contacts });
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { contacts } = this.state;
-
-    if (prevState.contacts !== contacts) {
-      localStorage.setItem(CONTACTS_lS_KEY, JSON.stringify(contacts));
-    }
-  }
-
-  addContactHandler = data => {
-    const { contacts } = this.state;
+  const addContactHandler = data => {
     if (contacts.find(contact => contact.name === data.name)) {
       alert(`${data.name} is already in contacts`);
       return;
@@ -47,23 +26,18 @@ export class App extends Component {
       ...data,
     };
 
-    this.setState(({ contacts }) => ({
-      contacts: [contact, ...contacts],
-    }));
+    setContacts(state => [contact, ...state]);
   };
 
-  deleteContactHandler = contactId => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
-    }));
+  const deleteContactHandler = contactId => {
+    setContacts(state => state.filter(contact => contact.id !== contactId));
   };
 
-  onFilterHandler = e => {
-    this.setState({ filter: e.currentTarget.value });
+  const onFilterHandler = e => {
+    setFilter(e.target.value);
   };
 
-  getVisibleContacts = () => {
-    const { contacts, filter } = this.state;
+  const getVisibleContacts = () => {
     const normalizedFilter = filter.toLowerCase();
 
     return contacts.filter(contact =>
@@ -71,23 +45,106 @@ export class App extends Component {
     );
   };
 
-  render() {
-    const { filter } = this.state;
-    const visibleContacts = this.getVisibleContacts();
+  const visibleContacts = getVisibleContacts();
 
-    return (
-      <Container>
-        <SignUpForm />
-        <h1>PhoneBook</h1>
-        <ContactForm onSubmit={this.addContactHandler} />
+  return (
+    <Container>
+      <SignUpForm />
+      <h1>PhoneBook</h1>
+      <ContactForm onSubmit={addContactHandler} />
 
-        <h1>Contacts</h1>
-        <Filter value={filter} onChange={this.onFilterHandler} />
-        <ContactList
-          contacts={visibleContacts}
-          onDeleteContact={this.deleteContactHandler}
-        />
-      </Container>
-    );
-  }
-}
+      <h1>Contacts</h1>
+      <Filter value={filter} onChange={onFilterHandler} />
+      <ContactList
+        contacts={visibleContacts}
+        onDeleteContact={deleteContactHandler}
+      />
+    </Container>
+  );
+};
+
+// const CONTACTS_lS_KEY = 'savedContacts';
+
+// export class OLDApp extends Component {
+//   state = {
+//     contacts: [
+//       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+//       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+//       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+//       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+//     ],
+//     filter: '',
+//   };
+
+//   componentDidMount() {
+//     const contacts = JSON.parse(localStorage.getItem(CONTACTS_lS_KEY));
+
+//     if (contacts) {
+//       this.setState({ contacts });
+//     }
+//   }
+
+//   componentDidUpdate(prevProps, prevState) {
+//     const { contacts } = this.state;
+
+//     if (prevState.contacts !== contacts) {
+//       localStorage.setItem(CONTACTS_lS_KEY, JSON.stringify(contacts));
+//     }
+//   }
+
+//   addContactHandler = data => {
+//     const { contacts } = this.state;
+//     if (contacts.find(contact => contact.name === data.name)) {
+//       alert(`${data.name} is already in contacts`);
+//       return;
+//     }
+
+//     const contact = {
+//       id: nanoid(),
+//       ...data,
+//     };
+
+//     this.setState(({ contacts }) => ({
+//       contacts: [contact, ...contacts],
+//     }));
+//   };
+
+//   deleteContactHandler = contactId => {
+//     this.setState(prevState => ({
+//       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+//     }));
+//   };
+
+//   onFilterHandler = e => {
+//     this.setState({ filter: e.currentTarget.value });
+//   };
+
+//   getVisibleContacts = () => {
+//     const { contacts, filter } = this.state;
+//     const normalizedFilter = filter.toLowerCase();
+
+//     return contacts.filter(contact =>
+//       contact.name.toLowerCase().includes(normalizedFilter)
+//     );
+//   };
+
+//   render() {
+//     const { filter } = this.state;
+//     const visibleContacts = this.getVisibleContacts();
+
+//     return (
+//       <Container>
+//         <SignUpForm />
+//         <h1>PhoneBook</h1>
+//         <ContactForm onSubmit={this.addContactHandler} />
+
+//         <h1>Contacts</h1>
+//         <Filter value={filter} onChange={this.onFilterHandler} />
+//         <ContactList
+//           contacts={visibleContacts}
+//           onDeleteContact={this.deleteContactHandler}
+//         />
+//       </Container>
+//     );
+//   }
+// }
