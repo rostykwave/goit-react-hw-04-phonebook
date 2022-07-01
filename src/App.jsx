@@ -5,6 +5,7 @@ import { ContactList } from './components/ContactList';
 import { Container } from './components/Container';
 import { Filter } from './components/Filter';
 import { SignUpForm } from 'components/HookForm';
+import defaultContacts from 'data/defaultContacts.json';
 
 const useLocalStorage = (key, defaultValue) => {
   const [state, setState] = useState(() => {
@@ -19,25 +20,11 @@ const useLocalStorage = (key, defaultValue) => {
 
 export const App = () => {
   const CONTACTS_lS_KEY = 'savedContacts';
-  const defaultContacts = [
-    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  ];
+
   const [contacts, setContacts] = useLocalStorage(
     CONTACTS_lS_KEY,
     defaultContacts
   );
-  // const [contacts, setContacts] = useState(
-  //   () =>
-  //     JSON.parse(window.localStorage.getItem(CONTACTS_lS_KEY)) ?? [
-  //       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  //       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  //       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  //       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  //     ]
-  // );
 
   const [filter, setFilter] = useState('');
 
@@ -72,11 +59,6 @@ export const App = () => {
   };
 
   const visibleContacts = getVisibleContacts();
-
-  // useEffect(() => {
-  //   console.log('use APP');
-  //   window.localStorage.setItem(CONTACTS_lS_KEY, JSON.stringify(contacts));
-  // }, [contacts]);
 
   return (
     <Container>
