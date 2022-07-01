@@ -1,22 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ContactForm } from './components/ContactForm';
 import { nanoid } from 'nanoid';
 import { ContactList } from './components/ContactList';
 import { Container } from './components/Container';
 import { Filter } from './components/Filter';
 import { SignUpForm } from 'components/HookForm';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 import defaultContacts from 'data/defaultContacts.json';
-
-const useLocalStorage = (key, defaultValue) => {
-  const [state, setState] = useState(() => {
-    return JSON.parse(window.localStorage.getItem(key)) ?? defaultValue;
-  });
-
-  useEffect(() => {
-    window.localStorage.setItem(key, JSON.stringify(state));
-  }, [key, state]);
-  return [state, setState];
-};
 
 export const App = () => {
   const CONTACTS_lS_KEY = 'savedContacts';
