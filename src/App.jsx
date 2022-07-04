@@ -4,7 +4,6 @@ import { nanoid } from 'nanoid';
 import { ContactList } from './components/ContactList';
 import { Container } from './components/Container';
 import { Filter } from './components/Filter';
-import { SignUpForm } from 'components/HookForm';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import defaultContacts from 'data/defaultContacts.json';
 
@@ -52,7 +51,6 @@ export const App = () => {
 
   return (
     <Container>
-      <SignUpForm />
       <h1>PhoneBook</h1>
       <ContactForm onSubmit={addContactHandler} />
 
