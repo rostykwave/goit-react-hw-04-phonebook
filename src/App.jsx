@@ -6,12 +6,11 @@ import { Container } from './components/Container';
 import { Filter } from './components/Filter';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import defaultContacts from 'data/defaultContacts.json';
+import * as CONSTANTS from 'constants';
 
 export const App = () => {
-  const CONTACTS_lS_KEY = 'savedContacts';
-
   const [contacts, setContacts] = useLocalStorage(
-    CONTACTS_lS_KEY,
+    CONSTANTS.CONTACTS_lS_KEY,
     defaultContacts
   );
 

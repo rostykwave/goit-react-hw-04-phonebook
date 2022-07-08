@@ -31,8 +31,6 @@ const initialValues = {
 
 export const ContactForm = ({ onSubmit }) => {
   const handleSubmit = (values, { resetForm }) => {
-    // console.log(values);
-    // console.log(actions);
     onSubmit(values);
     resetForm();
   };
@@ -48,9 +46,7 @@ export const ContactForm = ({ onSubmit }) => {
           <StyledInput
             type="text"
             name="name"
-            // pattern="^[a-zA-Zа-яієїґА-ЯҐЄІЇ]+(([' -][a-zA-Zа-яієїґА-ЯҐЄІЇ ])?[a-zA-Zа-яієїґА-ЯҐЄІЇ]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            // required
           />
           <FormError name="name" />
         </FormField>
@@ -60,9 +56,7 @@ export const ContactForm = ({ onSubmit }) => {
           <StyledInput
             type="tel"
             name="number"
-            // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            // required
           />
           <FormError name="number" />
         </FormField>
